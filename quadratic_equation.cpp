@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-using namespace std;
 
 class QuadraticEquation {
 public:
@@ -8,54 +7,38 @@ public:
 	double b;
 	double c;
 
-	void GetCoefficients() {
-		while (true) {
-			cout << "Enter the value of the coefficient a: ";
-			cin >> a;
-			if (!cin || cin.peek() != '\n') {
-				cout << "Incorrect input. Please, enter correct value." << endl;
-				cin.clear();
-				while (cin.get() != '\n');
+	void GetCoefficient(double* coef, char name) {
+		while (true) { //the loop repeats until the correct value is read
+			std::cout << "Enter the value of the coefficient " << name << ": ";
+			std::cin >> *coef;
+			if (!std::cin || std::cin.peek() != '\n') { //if an invalid value is read
+				std::cout << "Incorrect input. Please, enter correct value." << std::endl;
+				std::cin.clear(); //clear the error flag
+				while (std::cin.get() != '\n'); //read all the characters up to the end of the line to clean input
 			}
-			else
-				break;
-		}
-		while (true) {
-			cout << "Enter the value of the coefficient b: ";
-			cin >> b;
-			if (!cin || cin.peek() != '\n') {
-				cout << "Incorrect input. Please, enter correct value." << endl;
-				cin.clear();
-				while (cin.get() != '\n');
-			}
-			else
-				break;
-		}
-		while (true) {
-			cout << "Enter the value of the coefficient c: ";
-			cin >> c;
-			if (!cin || cin.peek() != '\n') {
-				cout << "Incorrect input. Please, enter correct value." << endl;
-				cin.clear();
-				while (cin.get() != '\n');
-			}
-			else
+			else //if a correct value is collected
 				break;
 		}
 	}
 
+	void GetEquation() {
+		GetCoefficient(&a, 'a');
+		GetCoefficient(&b, 'b');
+		GetCoefficient(&c, 'c');
+	}
+
 	void PrintEquation() {
-		cout << a << "x^2 + ";
+		std::cout << a << "x^2 + ";
 		if (b < 0)
-			cout << "(" << b << ")";
+			std::cout << "(" << b << ")";
 		else
-			cout << b;
-		cout << "x + ";
+			std::cout << b;
+		std::cout << "x + ";
 		if (c < 0)
-			cout << "(" << c << ")";
+			std::cout << "(" << c << ")";
 		else
-			cout << c;
-		cout << " = 0";
+			std::cout << c;
+		std::cout << " = 0";
 	}
 
 	double Discriminant() {
@@ -65,35 +48,35 @@ public:
 	}
 
 	void PrintRoots() {
-		cout << "The roots of equation ";
+		std::cout << "The roots of equation ";
 		PrintEquation();
-		cout << " : ";
+		std::cout << " : ";
 
 		if (a == 0) {
 			if (b == 0 && c == 0)
-				cout << "all numbers" << endl;
+				std::cout << "all numbers" << std::endl;
 			else if (b == 0 && c != 0)
-				cout << "no real roots" << endl;
+				std::cout << "no real roots" << std::endl;
 			else {
 				double x1 = - c / b;
-				cout << x1;
+				std::cout << x1;
 			}
 		}
 		else {
 			double d = Discriminant();
 			if (d < 0)
-				cout << "no real roots" << endl;
+				std::cout << "no real roots" << std::endl;
 			else if (d == 0) {
 				double x1 = -b / (2 * a);
-				cout << x1 << endl;
+				std::cout << x1 << std::endl;
 			}
 			else {
 				double x1 = (-b + sqrt(d)) / (2 * a);
 				double x2 = (-b - sqrt(d)) / (2 * a);
 				if (x1 > x2)
-					cout << x1 << " " << x2 << endl;
+					std::cout << x1 << " " << x2 << std::endl;
 				else
-					cout << x2 << " " << x1 << endl;
+					std::cout << x2 << " " << x1 << std::endl;
 			}
 		}
 	}
@@ -101,7 +84,7 @@ public:
 
 int main () {
 	QuadraticEquation equation;
-	equation.GetCoefficients();
+	equation.GetEquation();
 	equation.PrintRoots();
 	return 0;
 }
